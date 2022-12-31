@@ -158,8 +158,8 @@ def model(hparams, X, past=None, scope='model', reuse=False):
 
         # Transformer
         presents = []
-        pasts = hparams['n_layer']
-        assert len(pasts) == hparams['n_layer']
+        #pasts = hparams['n_layer']
+        #assert len(pasts) == hparams['n_layer']
         for layer, past in enumerate(pasts):
             h, present = block(h, 'h%d' % layer, past=past, hparams=hparams)
             presents.append(present)
