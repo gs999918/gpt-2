@@ -158,8 +158,8 @@ def model(hparams, X, past=None, scope='model', reuse=False):
 
         # Transformer
         presents = []
-        pasts = tf.unstack(past, axis=1) if past is not None else [None] * hparams.n_layer
-        assert len(pasts) == hparams.n_layer
+        pasts = tf.unstack(past, axis=1) if past is not None else [None] * hparams['n_layer']
+        assert len(pasts) == hparams['n_layer']
         for layer, past in enumerate(pasts):
             h, present = block(h, 'h%d' % layer, past=past, hparams=hparams)
             presents.append(present)
@@ -167,8 +167,8 @@ def model(hparams, X, past=None, scope='model', reuse=False):
         h = norm(h, 'ln_f')
 
         # Language model loss.  Do tokens <n predict token n?
-        h_flat = tf.reshape(h, [batch*sequence, hparams.n_embd])
+        h_flat = tf.reshape(h, [batch*sequence, hparams['n_embd']])
         logits = tf.matmul(h_flat, wte, transpose_b=True)
-        logits = tf.reshape(logits, [batch, sequence, hparams.n_vocab])
+        logits = tf.reshape(logits, [batch, sequence, hparams['n_vocab']])
         results['logits'] = logits
         return results
