@@ -158,7 +158,7 @@ def model(hparams, X, past=None, scope='model', reuse=False):
 
         # Transformer
         presents = []
-        pasts = tf.unstack(past, axis=1) if past is not None else axis * hparams['n_layer']
+        pasts = tf.unstack(past, axis=1) if past is not None else hparams['n_layer']
         assert len(pasts) == hparams['n_layer']
         for layer, past in enumerate(pasts):
             h, present = block(h, 'h%d' % layer, past=past, hparams=hparams)
