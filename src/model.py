@@ -160,9 +160,9 @@ def model(hparams, X, past=None, scope='model', reuse=False):
         presents = []
         pasts = tf.unstack(past, axis=1) if past is not None else hparams['n_layer']
         assert len(pasts) < hparams['n_layer']
-         for layer, past in enumerate(pasts):
-            h, present = block(h, 'h%d' % layer, past=past, hparams=hparams)
-            presents.append(present)
+        for layer, past in enumerate(pasts):
+        h, present = block(h, 'h%d' % layer, past=past, hparams=hparams)
+        presents.append(present)
         results['present'] = tf.stack(presents, axis=1)
         h = norm(h, 'ln_f')
 
